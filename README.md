@@ -1,5 +1,5 @@
 # MyFirstApp
-This is the first web application that I made which I uploaded to the Internet in November of 2020.
+This is the first web application that I made using Django (a web framework based on Python) which I uploaded to the Internet in November of 2020.
 The website has been taken down due to lack of activity by Heroku, where I hosted the website.
 
 I had recently learned about APIs (Application Programming Interfaces) and how to use them which led to me making this application as my main API-based project. The app is essentially a URL shortener which uses the Tiny URL API to shorten user inputted URLs. What makes this app special however, is the second webpage labeled "Bored?" This page is basically a place where users who are bored can come to entertain themselves. It offers a variety of entertainments from jokes of mutiple genres, to fun facts and pictures about dogs and cats, to even the picture of the day taken by the Hubble Telescope (from a NASA API).
