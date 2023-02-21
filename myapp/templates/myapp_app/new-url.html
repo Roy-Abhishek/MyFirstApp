@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+{%if IS_ERROR == True%}
+<div style="justify-content: center; align-items: center">
+	<h1 style="text-align: center; margin-bottom: 0px; margin-top: 70px; padding-bottom: 0px">Please search with a valid url</h1>
+	<div style="display: flex; justify-content: center; align-items: center; margin-bottom: 0px; margin-top: 0px; margin-top: 0px; padding-top: 0px; padding: 0px">
+	<h1 style="padding: 20px; width: 40%; margin-bottom: 0px">
+	<input type="url" name="output-url" placeholder='Link should start with "https://"' value={{ data_json }} style="height: 60px; font-size: 30pt">
+	<a href='https://www.{{data_json}}' style="color: white">
+		<button type="button" class="btn waves-effect waves-light orange">Go to Website</button>
+	</a>
+	</h1>
+	</div>
+	<h6 style="text-align: center; flex: 1; margin-bottom: 150px; margin-top: 10px">(This is a shortened url for Google)</h6>
+</div>
+{%else%}
+
+<div class="contain" style="border: 1px solid gray; border-radius: 20px; padding: 20px 20px; padding-top: 0px; margin-top: 20px; padding-bottom: 30px">
+<h2 style="text-align: center; margin-bottom: 0px">Your URL:</h2>
+<h3 style="text-align: center; margin-bottom: 0px; margin-top: 40px; padding-bottom: 0px; word-wrap: break-word">{{ input_url }}</h3>
+</div>
+
+<div style="display: flex; justify-content: center; align-items: center; margin-bottom: 0px; margin-top: 0px; margin-top: 0px; padding-top: 0px; padding: 0px">
+<h1 style="padding: 20px; width: 40%; margin-bottom: 0px">
+	<input type="url" name="output-url" placeholder='Link should start with "https://"' value={{ data_json }} style="height: 60px; font-size: 30pt">
+	<a href='https://www.{{data_json}}' style="color: white">
+		<button type="button" class="btn waves-effect waves-light orange">Go to Website</button>
+	</a>
+</h1>
+</div>
+<h6 style="text-align: center; flex: 1; margin-bottom: 150px; margin-top: 10px"></h6>
+{%endif%}
+
+{% endblock content %}

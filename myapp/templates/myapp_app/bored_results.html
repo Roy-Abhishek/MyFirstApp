@@ -1,0 +1,162 @@
+{% load static %}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Shortennr</title>
+	<meta charset="UTF-8">
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/2213_RC01/embed_loader.js"></script>
+	<link rel="icon" type="image/png" href={% static "pics/logo.png" %}>
+</head>
+<body>
+
+<nav style="position: fixed; top: 0" class="light-blue">
+	<div class="container nav-wrapper">
+		<div class="row">
+			<div class="col s6">
+			<div class="row">
+			<img src={%static "pics/logo.png"%} style="height: 40px; width: auto; padding-right: 10px; margin-top: 13px">
+			<a href="/" class="brand-logo">Shortennr</a>
+			</div>
+			</div>
+			<ul id="nav-mobile" class="row">
+			<div class="col s3"><li><a href="/">Home</a></li></div>
+			<div class="col s3"><li><a href="/bored">Bored?</a></li></div>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<div class="container" style="margin-top: 90px">
+	<h1 style="text-align: center">Enter the URL you want to shorten below!</h1>
+	<div class="row">
+		<div class="col s6">
+			<div class="center container">
+				<i class="large material-icons" style="color: #EE6E73">flash_on</i>
+				<p>Fast Python URL shortener</p>
+				<p class="light center">Put in any URL you like. Weather it is to "Rick Roll" a friend or for work</p>
+			</div>
+		</div>
+		<div class="col s6">
+			<div class="center container">
+				<i class="large material-icons" style="color: blue">chrome_reader_mode</i>
+				<p>A much simpler working website than others where information is always kept safe</p>
+				<p class="light center">We built this with love ❤</p>
+			</div>
+		</div>
+	</div>
+
+	<form action="{% url 'bored-results-screen' %}" method="post" style="width: 50%">
+		{% csrf_token %}
+		<div style="display: flex; border: 0px solid gray; width: 200%">
+			<div style="margin-top: 30px; border: 1px solid gray; align-items: center; display: flex; flex-direction: column; margin-bottom: 10px; border-radius: 30px; padding: 20px; padding-bottom: 10px; padding-top: 10px; margin-right: 10px; width: 100%">
+			<h5 style="margin-top: 20px">Jokes to brighten your day</h5>
+			<input type="text" name="num-jokes" placeholder='How many jokes do you want (1 - 10)' value="" style="width: 100%">
+			<input type="text" name="type-jokes-dark" placeholder="Dark humor allowed? (yes/no)" style="width: 100%">
+			<input type="text" name="type-jokes-misc" placeholder="Miscellaneous humor allowed? (yes/no)" style="width: 100%">
+			{% if IS_NOTHING_JOKES == False %}
+				<p style="margin-bottom: 0px; margin-top: 20px; font-size: 20">Your joke(s):</p>
+				<ol style="padding-right: 30px">
+				{% for list1 in joke%}
+					<li>{{ list1 }}</li>
+					<br>
+				{% endfor %}
+				</ol>
+			{% else %}
+			{% endif %}
+			</div>
+			<div style="margin-top: 30px; border: 1px solid gray; align-items: center; display: flex; flex-direction: column; margin-bottom: 10px; border-radius: 30px; padding: 20px; padding-bottom: 30px; padding-top: 10px; margin-left: 10px; width: 100%">
+				<h5 style="margin-top: 20px">Magic 8 Ball</h5>
+				<input type="text" name="8ball-number" placeholder='Type the number you want (1 - 8) or type "random"' value="">
+				{% if MAGIC_IS_INT == True and IS_NOTHING_NUMBER == False%}
+					<h3>Your number: {{magic_input}}</h3>
+					<h4 style="padding-bottom: 0px">{{message}}</h4>
+				{% elif MAGIC_IS_INT == False and IS_NOTHING_NUMBER == False%}
+					<h3>Your number: {{ random_int }}</h3>
+					<h4 style="padding-bottom: 0px">{{message}}</h4>
+				{% elif IS_NOTHING_NUMBER == True %}
+				{% endif %}
+			</div>
+		</div>
+		<div style="display: flex; border: 0px solid gray; width: 200%">
+			<div style="margin-top: 10px; border: 1px solid gray; align-items: center; display: flex; flex-direction: column; margin-bottom: 10px; border-radius: 30px; padding: 20px; padding-bottom: 30px; padding-top: 10px; margin-right: 10px; width: 100%">
+			<h5 style="margin-top: 20px">Pictures of dogs to make your day</h5>
+			<input type="text" name="input-dogs" placeholder='Type in any breed or type "random"' value="" style="width: 100%; margin-bottom: 20px">
+			{% if IS_NOTHING_DOG == False  and IS_DOG_ERROR == False %}
+				{% for x in dogs %}
+					<a href={{ x }}><img src={{ x }} style="height: auto; width: 250px; border-radius: 10px; margin-bottom: 10px"></a>
+				{% endfor %}
+			{% elif IS_NOTHING_DOG == True and IS_DOG_ERROR == False %}
+			{% elif IS_NOTHING_DOG == False and IS_DOG_ERROR == True %}
+				<h6>Sorry, but we do not have that breed in our database</h6>
+			{% endif %}
+			</div>
+			<div style="margin-top: 10px; border: 1px solid gray; align-items: center; display: flex; flex-direction: column; margin-bottom: 10px; border-radius: 30px; padding: 20px; padding-bottom: 30px; padding-top: 10px; margin-left: 10px; width: 100%">
+			<h5 style="margin-top: 20px">Interesting Cat facts</h5>
+			<input type="text" name="input-cats-pic" placeholder='Type in number of cats you want (1 - 10)' value="" style="width: 100%">
+			<input type="text" name="input-cats-fact" placeholder='Type "yes" if you want a cat fact' value="" style="width: 100%; margin-bottom: 20px">
+			{% if IS_NOTHING_CAT_PICS == False and IS_NOTHING_CAT_FACTS == False %}
+				<div class="row">
+				{% for pics in cats_pictures %}
+				<img src={{pics}} style="height: auto; width: 175px; border-radius: 20px">
+				{% endfor %}
+				<p>{{cats_facts}}</p>
+				</div>
+			{% elif IS_NOTHING_CAT_PICS == False and  IS_NOTHING_CAT_FACTS == True %}
+				<div class="row" style="">
+				{% for pics in cats_pictures %}
+				<img src={{pics}} style="height: auto; width: 175px; border-radius: 20px; margin-top: 5px">
+				{% endfor %}
+				</div>
+			{% elif IS_NOTHING_CAT_PICS == True and IS_NOTHING_CAT_FACTS == False %}
+				<p>{{cats_facts}}</p>
+			{% elif IS_NOTHING_CAT_PICS == True and IS_NOTHING_CAT_FACTS == True %}
+			{% endif %}
+			</div>
+		</div>
+		<div style="display: flex; border: 0px solid gray; width: 200%">
+			<div style="margin-top: 10px; border: 1px solid gray; align-items: center; display: flex; flex-direction: column; margin-bottom: 10px; border-radius: 30px; padding: 20px; padding-bottom: 30px; padding-top: 10px; margin-right: 10px; width: 100%">
+			<h5 style="margin-top: 20px">Simple everyday advice</h5>
+			<input type="text" name="input-advice" placeholder='Type in "random"/"yes" or a number between 1 and 210' value="" style="width: 100%; margin-bottom: 20px">
+			{% if IS_NOTHING_ADVICE == False%}
+				<p>{{ advice }}</p>
+			{% elif IS_NOTHING_ADVICE == True%}
+			{% endif %}
+			</div>
+			<div style="margin-top: 10px; border: 1px solid gray; align-items: center; display: flex; flex-direction: column; margin-bottom: 10px; border-radius: 30px; padding: 20px; padding-bottom: 30px; padding-top: 10px; margin-left: 10px; width: 100%">
+			<h5 style="margin-top: 20px">Interesting Number facts</h5>
+			<input type="text" name="input-number-fact" placeholder='Type in "trivia", "year", "date", "math" or "random"' value="" style="width: 100%; margin-bottom: 20px">
+			{% if IS_NOTHING_NUMBER_FACT == False %}
+				<p>{{ data_number_facts }}</p>
+			{% elif IS_NOTHING_NUMBER_FACT == True%}
+			{% endif %}
+			</div>
+		</div>
+		<div style="display: flex; border: 0px solid gray; width: 200%; margin-bottom: 50px; margin-top: 10px">
+			<div style="margin-top: 10px; border: 1px solid gray; align-items: center; display: flex; flex-direction: column; margin-bottom: 10px; border-radius: 30px; padding: 20px; padding-bottom: 30px; padding-top: 10px; width: 100%">
+			<h5 style="margin-top: 20px; text-align: center">NASA's past pictures of the day</h5>
+			<input type="text" name="input-nasa" placeholder="Type in a number between 0 and 90 for how many days you want to go back" value="" style="width: 100%">
+			{% if IS_NOTHING_NASA == False %}
+				<div style="display: flex; flex-direction: row; margin-top: 20px">
+				<img src={{ data_json_image }} style="height: auto; width: 50%; border-radius: 15px; margin-right: 15px; margin-left: 0px" alt={{ data_json_image }}>
+				<p style="width: 50%; margin-left: 5px; padding-right: 15px; font-size: 17px;">{{ data_json_description }}</p>
+				</div>
+			{% else %}
+			{% endif %}
+			</div>
+		</div>
+		<button class="btn waves-effect waves-light green" type="submit" name="action" style="margin-bottom: 150px; margin-top: 50px">
+			Get Results<i class="material-icons right">short_text</i>
+  		</button>
+	</form>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+</body>
+</html>
